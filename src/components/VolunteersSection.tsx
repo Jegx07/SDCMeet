@@ -224,28 +224,7 @@ export const VolunteersSection = () => {
           ))}
         </div>
 
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="text-center"
-        >
-          <div className="inline-flex items-center gap-2 mb-6">
-            <Heart className="w-5 h-5 text-primary" />
-            <span className="text-muted-foreground font-medium">Want to be part of the team?</span>
-          </div>
-          <div>
-            <a
-              href="#"
-              className="inline-flex items-center gap-3 px-10 py-5 bg-primary text-primary-foreground font-display font-bold text-lg rounded-full neon-button group"
-            >
-              <Sparkles className="w-5 h-5" />
-              Join Volunteer Team
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </a>
-          </div>
-        </motion.div>
+
       </div>
 
       {/* Circuit line connector */}
