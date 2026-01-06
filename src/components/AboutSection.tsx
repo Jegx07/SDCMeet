@@ -104,7 +104,7 @@ export const AboutSection = () => {
             What is <span className="text-primary">SDC Meet</span>?
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            SDC Meet brings together aspiring developers, technical enthusiasts, and business
+            Student Developers Meet brings together aspiring developers, technical enthusiasts, and business
             professionals to explore the transformative power of automation. Hosted by UiPath,
             this event bridges the gap between technical skills and real-world career opportunities.
           </p>
