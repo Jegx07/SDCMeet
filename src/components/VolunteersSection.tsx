@@ -18,6 +18,7 @@ const volunteers = [
     name: 'Akash',
     role: 'Event Manager',
     image: '/Team/Akash  - Event Manager.png',
+    linkedin: 'https://www.linkedin.com/in/akash-akash-94bb18336?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
   },
   {
     name: 'Deepika K',
@@ -33,26 +34,31 @@ const volunteers = [
     name: 'Haritha',
     role: 'Technical Lead',
     image: '/Team/Haritha - Technical Lead.png',
+    linkedin: 'https://www.linkedin.com/in/haritha-krishnamoorthy-861ba1339?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
   },
   {
     name: 'Jegatheesh',
     role: 'Technical Lead',
     image: '/Team/Jegatheesh - Technical Lead.png',
+    linkedin: 'https://www.linkedin.com/in/jegatheesh-v-877b61327',
   },
   {
     name: 'Karishma',
     role: 'Content Creator',
     image: '/Team/Karishma - Content Creator.png',
+    linkedin: 'https://www.linkedin.com/in/karishma-j-b741bb295?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
   },
   {
     name: 'Karthikeyan',
     role: 'Secretary',
     image: '/Team/Karthikeyan - Secretary.png',
+    linkedin: 'https://www.linkedin.com/in/karthikeyan-s-956227217/',
   },
   {
     name: 'Lena Sri S',
     role: 'Public Executive Officer',
     image: '/Team/Lena Sri S - Public Executive Officer.png',
+    linkedin: 'https://www.linkedin.com/in/lena-sri-s-916192295',
   },
   {
     name: 'Lenin Roy',
@@ -63,21 +69,25 @@ const volunteers = [
     name: 'Narmatha',
     role: 'Secretary',
     image: '/Team/Narmatha - Secretary.png',
+    linkedin: 'https://www.linkedin.com/in/narmatha-m-a849212a1',
   },
   {
     name: 'Praveena',
     role: 'Social Media Handler',
     image: '/Team/Praveena - Social Media Handler.png',
+    linkedin: 'https://www.linkedin.com/in/praveena-s-740a93381?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
   },
   {
     name: 'Shakthi Pranaash',
     role: 'Technical Lead',
     image: '/Team/Shakthi Pranaash -  Technical Lead.png',
+    linkedin: 'https://www.linkedin.com/in/sakthi-pranaash-63p830?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
   },
   {
     name: 'Yuvaraj',
     role: 'Graphical Designer',
     image: '/Team/Yuvaraj - Graphical Designer.png',
+    linkedin: 'https://www.linkedin.com/in/yuva2007',
   },
   {
     name: '10',
@@ -125,46 +135,92 @@ export const VolunteersSection = () => {
         {/* Volunteers Grid - Matching Speaker Card Style */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {volunteers.map((volunteer, index) => (
-            <motion.div
-              key={volunteer.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="group"
-            >
-              {/* Premium Layered Card - Same as speakers */}
-              <div className="premium-card p-6 pt-16">
-                {/* Geometric pattern on hover */}
-                <div className="geo-pattern top-4 right-4 group-hover:opacity-100" />
-                <div className="geo-pattern bottom-4 left-4 group-hover:opacity-100 rotate-180" />
+            volunteer.linkedin ? (
+              <motion.a
+                key={volunteer.name}
+                href={volunteer.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="group"
+              >
+                {/* Premium Layered Card - Same as speakers */}
+                <div className="premium-card p-6 pt-16">
+                  {/* Geometric pattern on hover */}
+                  <div className="geo-pattern top-4 right-4 group-hover:opacity-100" />
+                  <div className="geo-pattern bottom-4 left-4 group-hover:opacity-100 rotate-180" />
 
-                {/* Image with "out of bounds" effect */}
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2">
-                  <div className="relative w-24 h-24">
-                    {/* Glow behind image */}
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-primary/50 blur-xl opacity-0 group-hover:opacity-50 transition-opacity scale-125" />
-                    {/* Image container */}
-                    <div className="relative w-full h-full rounded-full p-1 bg-gradient-to-br from-primary/30 to-white border-4 border-white shadow-xl group-hover:scale-105 transition-transform duration-500">
-                      <img
-                        src={volunteer.image}
-                        alt={volunteer.name}
-                        className="w-full h-full rounded-full object-cover"
-                      />
+                  {/* Image with "out of bounds" effect */}
+                  <div className="absolute -top-10 left-1/2 -translate-x-1/2">
+                    <div className="relative w-24 h-24">
+                      {/* Glow behind image */}
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-primary/50 blur-xl opacity-0 group-hover:opacity-50 transition-opacity scale-125" />
+                      {/* Image container */}
+                      <div className="relative w-full h-full rounded-full p-1 bg-gradient-to-br from-primary/30 to-white border-4 border-white shadow-xl group-hover:scale-105 transition-transform duration-500">
+                        <img
+                          src={volunteer.image}
+                          alt={volunteer.name}
+                          className="w-full h-full rounded-full object-cover"
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Info */}
-                <div className="text-center relative z-10 mt-2">
-                  <h3 className="font-display font-bold text-xl text-sdc-dark mb-2 group-hover:text-primary transition-colors">
-                    {volunteer.name}
-                  </h3>
-                  <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary font-semibold text-sm rounded-full">
-                    {volunteer.role}
-                  </span>
+                  {/* Info */}
+                  <div className="text-center relative z-10 mt-2">
+                    <h3 className="font-display font-bold text-xl text-sdc-dark mb-2 group-hover:text-primary transition-colors">
+                      {volunteer.name}
+                    </h3>
+                    <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary font-semibold text-sm rounded-full">
+                      {volunteer.role}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.a>
+            ) : (
+              <motion.div
+                key={volunteer.name}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="group"
+              >
+                {/* Premium Layered Card - Same as speakers */}
+                <div className="premium-card p-6 pt-16">
+                  {/* Geometric pattern on hover */}
+                  <div className="geo-pattern top-4 right-4 group-hover:opacity-100" />
+                  <div className="geo-pattern bottom-4 left-4 group-hover:opacity-100 rotate-180" />
+
+                  {/* Image with "out of bounds" effect */}
+                  <div className="absolute -top-10 left-1/2 -translate-x-1/2">
+                    <div className="relative w-24 h-24">
+                      {/* Glow behind image */}
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-primary/50 blur-xl opacity-0 group-hover:opacity-50 transition-opacity scale-125" />
+                      {/* Image container */}
+                      <div className="relative w-full h-full rounded-full p-1 bg-gradient-to-br from-primary/30 to-white border-4 border-white shadow-xl group-hover:scale-105 transition-transform duration-500">
+                        <img
+                          src={volunteer.image}
+                          alt={volunteer.name}
+                          className="w-full h-full rounded-full object-cover"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Info */}
+                  <div className="text-center relative z-10 mt-2">
+                    <h3 className="font-display font-bold text-xl text-sdc-dark mb-2 group-hover:text-primary transition-colors">
+                      {volunteer.name}
+                    </h3>
+                    <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary font-semibold text-sm rounded-full">
+                      {volunteer.role}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            )
           ))}
         </div>
 
