@@ -8,11 +8,13 @@ const volunteers = [
     name: 'Shashti Shri',
     role: 'Student Developer Champion',
     image: '/Team/Shashti Shri - Student Developer Champion.png',
+    linkedin: 'https://www.linkedin.com/in/shashti-shree-s-29a3ba295?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
   },
   {
     name: 'Boomika B',
     role: 'Vice President',
     image: '/Team/Boomika B - Vice President.png',
+    linkedin: 'https://www.linkedin.com/in/boomika-boobala-ilanthirayan-273403295?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
   },
   {
     name: 'Akash',
@@ -24,11 +26,13 @@ const volunteers = [
     name: 'Deepika K',
     role: 'Event Manager',
     image: '/Team/Deepika K - Event Manager.png',
+    linkedin: 'https://www.linkedin.com/in/deepika-kasirajan-280602378',
   },
   {
     name: 'Harini MM',
     role: 'Secretary',
     image: '/Team/Harini MM - Secretary.png',
+    linkedin: 'https://www.linkedin.com/in/harini-mahesh-32155a2ba?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
   },
   {
     name: 'Haritha',
@@ -64,6 +68,7 @@ const volunteers = [
     name: 'Lenin Roy',
     role: 'Team Member',
     image: '/Team/Lenin Roy.png',
+    linkedin: 'https://www.linkedin.com/in/lenin-roy-s-a2194132b',
   },
   {
     name: 'Narmatha',
@@ -90,14 +95,22 @@ const volunteers = [
     linkedin: 'https://www.linkedin.com/in/yuva2007',
   },
   {
-    name: '10',
+    name: 'Madhusudhanan',
     role: 'Team Member',
-    image: '/Team/10.png',
+    image: '/placeholder.svg',
+    linkedin: 'https://www.linkedin.com/in/madhusudhanan-n-a-972819336?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
   },
   {
-    name: '11',
-    role: 'Team Member',
-    image: '/Team/11.png',
+    name: 'Dharshini Shri',
+    role: 'Graphical Designer',
+    image: '/Team/Dharshini Shri - Graphical Designer.png',
+    linkedin: 'https://www.linkedin.com/in/dharshini-shri-895829327?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
+  },
+  {
+    name: 'Dharani',
+    role: 'Graphical Designer',
+    image: '/Team/Dharani- Graphical Designer.png',
+    linkedin: 'https://www.linkedin.com/in/dharani-m-5146b3328?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
   },
 ];
 
@@ -236,3 +249,4 @@ export const VolunteersSection = () => {
     </section>
   );
 };
+a
