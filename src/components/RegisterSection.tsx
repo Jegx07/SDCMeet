@@ -3,6 +3,7 @@ import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { Send, Check, User, Mail, Phone, Building, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
 
 export const RegisterSection = () => {
   const ref = useRef(null);
@@ -144,24 +145,16 @@ export const RegisterSection = () => {
                   </div>
 
                   {/* Submit Button with Neon Glow */}
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full mt-6 py-4 bg-primary text-primary-foreground font-display font-bold text-lg rounded-xl neon-button disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                        Processing...
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles className="w-5 h-5" />
-                        Register Now
-                        <Send className="w-5 h-5" />
-                      </>
-                    )}
-                  </button>
+                  <Link to="/register">
+                    <button
+                      type="button"
+                      className="w-full mt-6 py-4 bg-primary text-primary-foreground font-display font-bold text-lg rounded-xl neon-button flex items-center justify-center gap-3"
+                    >
+                      <Sparkles className="w-5 h-5" />
+                      Register Now
+                      <Send className="w-5 h-5" />
+                    </button>
+                  </Link>
 
                   <p className="text-center text-sm text-white/40 mt-4">
                     By registering, you agree to receive event updates via email.
