@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Calendar, Clock, MapPin, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 // Floating Shape Component
 const FloatingShape = ({
