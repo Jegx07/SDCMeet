@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const navLinks = [
   { href: "#home", label: "Home" },
@@ -53,12 +54,12 @@ export const Navigation = () => {
             </a>
           ))}
 
-          <a
-            href="#register"
+          <Link
+            to="/register"
             className="px-6 py-2.5 bg-primary text-primary-foreground font-semibold rounded-full btn-hover glow-orange-sm tracking-wide"
           >
             Register
-          </a>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -93,13 +94,13 @@ export const Navigation = () => {
                 </a>
               ))}
 
-              <a
-                href="#register"
+              <Link
+                to="/register"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="mt-2 px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-full text-center"
               >
                 Register
-              </a>
+              </Link>
             </div>
           </motion.div>
         )}
