@@ -1,173 +1,369 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
+import { AnimatePresence, motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { Send, Check, User, Mail, Phone, Building, Sparkles } from 'lucide-react';
-import { toast } from 'sonner';
-import { Link } from 'react-router-dom';
+import {
+  Award,
+  Code,
+  Coffee,
+  Cpu,
+  Sparkles,
+  Target,
+  Users,
+  Utensils,
+  Zap,
+} from 'lucide-react';
 
-export const RegisterSection = () => {
+const schedule = [
+  {
+    time: '09:00 - 09:15',
+    title: 'Welcome & Inauguration',
+    description: 'Event opening and introduction',
+    icon: Users,
+  },
+  {
+    time: '09:15 - 09:45',
+    title: 'Keynote: Future of AI & Intelligent Automation',
+    description: 'Industry insights',
+    icon: Award,
+  },
+  {
+    time: '09:45 - 10:30',
+    title: 'Mr. Viraj',
+    description: 'Meet UiPath: Turning Manual Tasks into Smart Automation',
+    icon: Code,
+  },
+  {
+    time: '10:30 - 11:15',
+    title: 'Mr. Palaniyappan',
+    description: 'Coded Agent with UiPath SDK and LangGraph',
+    icon: Code,
+  },
+  {
+    time: '11:15 - 11:45',
+    title: 'Tea Break',
+    description: '',
+    icon: Coffee,
+  },
+  {
+    time: '11:45 - 12:30',
+    title: 'Mr. Srenivasan',
+    description: 'AI Help Desk & Smart Resume Screening Agent',
+    icon: Code,
+  },
+  {
+    time: '12:30 - 01:30',
+    title: 'Ms. Teena Cobb',
+    description: 'Industry Automation Insights',
+    icon: Code,
+  },
+  {
+    time: '01:30 - 02:30',
+    title: 'Lunch Break',
+    description: '',
+    icon: Utensils,
+  },
+  {
+    time: '02:30 - 03:30',
+    title: 'UiPath Olympics',
+    description: 'Automation challenges',
+    icon: Users,
+    isOlympics: true,
+  },
+  {
+    time: '03:30 - 03:45',
+    title: 'Tea Break',
+    description: '',
+    icon: Coffee,
+  },
+  {
+    time: '03:45 - 04:00',
+    title: 'Evaluation',
+    description: '',
+    icon: Award,
+  },
+  {
+    time: '04:00 - 04:30',
+    title: 'Prize Distribution & Closing Ceremony',
+    description: '',
+    icon: Award,
+  },
+];
+
+const TimelineItem = ({
+  item,
+  index,
+  isInView,
+  onClick,
+}: {
+  item: (typeof schedule)[0] & { isOlympics?: boolean };
+  index: number;
+  isInView: boolean;
+  onClick?: () => void;
+}) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={isInView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.4, delay: index * 0.05 }}
+      className="relative flex gap-4 pb-8 last:pb-0 group"
+    >
+      {/* Timeline node */}
+      <div className="relative flex flex-col items-center">
+        <div
+          className="w-4 h-4 rounded-full transition-all duration-300 bg-white/20 border-2 border-white/40 group-hover:bg-primary group-hover:border-primary group-hover:scale-110"
+        />
+        {/* Connecting line */}
+        <div className="w-0.5 flex-1 bg-gradient-to-b from-primary/50 to-white/10 mt-2" />
+      </div>
+
+      {/* Content - Frosted glass card */}
+      <div
+        className={`flex-1 frosted-card rounded-xl p-5 ${
+          item.isOlympics ? 'olympics-card cursor-pointer' : ''
+        }`}
+        onClick={onClick}
+        role={item.isOlympics ? 'button' : undefined}
+        tabIndex={item.isOlympics ? 0 : -1}
+        onKeyDown={(event) => {
+          if (!item.isOlympics || !onClick) return;
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            onClick();
+          }
+        }}
+      >
+        {item.isOlympics ? (
+          <>
+            <span className="olympics-wave" aria-hidden="true" />
+            <span className="olympics-ripple" aria-hidden="true" />
+            <span className="olympics-glow" aria-hidden="true" />
+            <span className="olympics-badge">
+              <span className="olympics-badge-text">Special Event</span>
+              <Sparkles className="olympics-badge-icon" aria-hidden="true" />
+            </span>
+          </>
+        ) : null}
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <span className="text-primary font-bold text-sm">{item.time}</span>
+            <h4 className="font-display font-bold text-lg text-white mt-1 mb-1 group-hover:text-primary transition-colors">
+              {item.title}
+            </h4>
+            <p className="text-white/60 text-sm">{item.description}</p>
+          </div>
+          <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center shrink-0 group-hover:bg-primary/40 transition-colors">
+            <item.icon className="w-5 h-5 text-primary" />
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+export const ScheduleSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isOlympicsOpen, setOlympicsOpen] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    toast.success('Registration successful! Check your email for confirmation.');
-  };
+  const olympicsSteps = [
+    { title: 'Draw Problem Cue Card', icon: Sparkles },
+    { title: 'Analyze Real-Life Challenge', icon: Cpu },
+    { title: 'Design Automation Workflow Idea', icon: Zap },
+    { title: 'Present Solution to Judges', icon: Target },
+  ];
 
   return (
-    <section id="register" className="py-24 dark-section relative overflow-hidden">
-      {/* Animated blobs */}
-      <div className="absolute top-10 right-10 w-64 h-64 bg-primary/20 blob opacity-40" />
-      <div className="absolute bottom-10 left-10 w-80 h-80 bg-white/5 blob blob-secondary opacity-30" />
+    <section id="schedule" className="relative overflow-hidden">
+      {/* Feathered gradient transition from white */}
+      <div className="h-24 bg-gradient-to-b from-white via-white/50 to-transparent absolute top-0 left-0 right-0 z-10" />
+      
+      <div className="pt-32 pb-24 dark-section relative">
+        {/* Animated blobs - lava lamp effect */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/30 blob opacity-50" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-white/5 blob blob-secondary opacity-30" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[150px]" />
 
-      {/* Grid overlay applied via dark-section */}
+        {/* Grid overlay is applied via dark-section */}
 
-      <div className="container mx-auto px-6 relative z-10" ref={ref}>
-        <div className="max-w-2xl mx-auto">
+        <div className="container mx-auto px-6 relative z-10" ref={ref}>
           {/* Section Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
-            className="text-center mb-12"
+            className="text-center mb-16"
           >
             <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
-              Secure Your Spot
+              Event Schedule
             </span>
             <h2 className="font-display font-black text-5xl md:text-6xl lg:text-7xl text-white mb-6">
-              Register <span className="gradient-text-orange">Now</span>
+              The <span className="gradient-text-orange">Timeline</span>
             </h2>
-            <p className="text-lg text-white/60">
-              Limited seats available. Join us for an unforgettable day of learning and networking.
+            <p className="text-lg text-white/60 max-w-2xl mx-auto">
+              A full day packed with technical sessions and business insights
             </p>
           </motion.div>
 
-          {/* Premium Glass Registration Form */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="relative"
-          >
-            {/* Gradient border effect */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary via-white/20 to-primary rounded-2xl blur-sm opacity-50" />
-
-            <div className="relative glass-card rounded-2xl p-8 md:p-10">
-              {isSubmitted ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="text-center py-8"
-                >
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-primary/50 flex items-center justify-center mx-auto mb-6 glow-orange">
-                    <Check className="w-10 h-10 text-white" />
-                  </div>
-                  <h3 className="font-display font-bold text-2xl text-white mb-3">
-                    Registration Complete!
-                  </h3>
-                  <p className="text-white/60">
-                    We've sent a confirmation email with all the event details.
-                  </p>
-                </motion.div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Name */}
-                  <div className="group">
-                    <label className="block text-sm font-medium text-white/80 mb-2 tracking-wide">
-                      Full Name
-                    </label>
-                    <div className="relative">
-                      <User className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 group-focus-within:text-primary transition-colors" />
-                      <input
-                        type="text"
-                        required
-                        placeholder="John Doe"
-                        className="premium-input pl-8"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Email */}
-                  <div className="group">
-                    <label className="block text-sm font-medium text-white/80 mb-2 tracking-wide">
-                      Email Address
-                    </label>
-                    <div className="relative">
-                      <Mail className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 group-focus-within:text-primary transition-colors" />
-                      <input
-                        type="email"
-                        required
-                        placeholder="john@example.com"
-                        className="premium-input pl-8"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Phone */}
-                  <div className="group">
-                    <label className="block text-sm font-medium text-white/80 mb-2 tracking-wide">
-                      Phone Number
-                    </label>
-                    <div className="relative">
-                      <Phone className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 group-focus-within:text-primary transition-colors" />
-                      <input
-                        type="tel"
-                        required
-                        placeholder="+1 (555) 000-0000"
-                        className="premium-input pl-8"
-                      />
-                    </div>
-                  </div>
-
-                  {/* University/Company */}
-                  <div className="group">
-                    <label className="block text-sm font-medium text-white/80 mb-2 tracking-wide">
-                      University / Company
-                    </label>
-                    <div className="relative">
-                      <Building className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 group-focus-within:text-primary transition-colors" />
-                      <input
-                        type="text"
-                        required
-                        placeholder="Your organization"
-                        className="premium-input pl-8"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Submit Button with Neon Glow */}
-                  <Link to="/register">
-                    <button
-                      type="button"
-                      className="w-full mt-6 py-4 bg-primary text-primary-foreground font-display font-bold text-lg rounded-xl neon-button flex items-center justify-center gap-3"
-                    >
-                      <Sparkles className="w-5 h-5" />
-                      Register Now
-                      <Send className="w-5 h-5" />
-                    </button>
-                  </Link>
-
-                  <p className="text-center text-sm text-white/40 mt-4">
-                    By registering, you agree to receive event updates via email.
-                  </p>
-                </form>
-              )}
+          {/* Schedule */}
+          <div className="max-w-4xl mx-auto">
+            <div>
+              {schedule.map((item, index) => (
+                <TimelineItem
+                  key={item.title}
+                  item={item}
+                  index={index}
+                  isInView={isInView}
+                  onClick={item.isOlympics ? () => setOlympicsOpen(true) : undefined}
+                />
+              ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
-      {/* Glow line connector */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-20 bg-gradient-to-b from-primary to-transparent" />
+      <AnimatePresence>
+        {isOlympicsOpen ? (
+          <motion.div
+            className="olympics-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.button
+              type="button"
+              className="olympics-overlay-backdrop"
+              onClick={() => setOlympicsOpen(false)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              aria-label="Close UiPath Olympics experience"
+            />
+            <motion.div
+              className="olympics-modal"
+              initial={{ opacity: 0, y: 20, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.98 }}
+              transition={{ duration: 0.35 }}
+              role="dialog"
+              aria-modal="true"
+            >
+              <div className="olympics-modal-glow" aria-hidden="true" />
+              <div className="olympics-modal-grid" aria-hidden="true" />
+
+              <div className="olympics-modal-content">
+                <div className="olympics-modal-header">
+                  <div>
+                    <p className="text-primary font-semibold text-xs uppercase tracking-[0.3em]">
+                      UiPath Olympics
+                    </p>
+                    <h3 className="font-display font-black text-3xl md:text-5xl text-white mt-3">
+                      UiPath Olympics - Innovation Challenge
+                    </h3>
+                    <p className="text-white/70 text-lg mt-3">
+                      Think. Automate. Innovate.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    className="olympics-close"
+                    onClick={() => setOlympicsOpen(false)}
+                  >
+                    Back to Schedule
+                  </button>
+                </div>
+
+                <div className="mt-8 text-white/70 leading-relaxed space-y-4">
+                  <p>
+                    UiPath Olympics is an engaging innovation challenge designed to promote
+                    creativity, teamwork, and real-world automation problem solving.
+                  </p>
+                  <p>
+                    In this event, each team leader will draw a cue card containing a real-life
+                    problem scenario. Teams will be given one hour to analyze the challenge and
+                    propose a technical or automation-based workflow solution using logical
+                    thinking and UiPath concepts.
+                  </p>
+                  <p>
+                    Participants are not required to fully develop a project. Instead, they must
+                    focus on understanding the problem, designing an efficient automation
+                    workflow idea, and presenting their solution strategy and expected outcome
+                    to judges.
+                  </p>
+                  <p>
+                    The activity encourages students to think like automation developers and
+                    explore how automation can simplify everyday tasks through collaboration
+                    and innovation.
+                  </p>
+                </div>
+
+                <div className="mt-10 grid gap-6 lg:grid-cols-2">
+                  <div className="frosted-card rounded-2xl p-6 olympics-panel">
+                    <h4 className="text-white font-display text-xl font-bold mb-6">
+                      How The Challenge Works
+                    </h4>
+                    <div className="space-y-4">
+                      {olympicsSteps.map((step, index) => (
+                        <motion.div
+                          key={step.title}
+                          className="olympics-step"
+                          initial={{ opacity: 0, x: -16 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.1 + index * 0.08 }}
+                        >
+                          <span className="olympics-step-icon">
+                            <step.icon className="w-5 h-5 text-primary" />
+                          </span>
+                          <span className="text-white/80 text-sm md:text-base">
+                            {step.title}
+                          </span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="frosted-card rounded-2xl p-6 olympics-panel">
+                    <h4 className="text-white font-display text-xl font-bold mb-6">
+                      Automation Innovation Story
+                    </h4>
+                    <div className="olympics-visual">
+                      <div className="olympics-visual-flow">
+                        <span className="olympics-visual-line" />
+                        <div className="olympics-visual-node">
+                          <span className="olympics-visual-dot" />
+                          <div>
+                            <p className="text-white font-semibold">Problem Signal</p>
+                            <p className="text-white/60 text-xs">Input discovery</p>
+                          </div>
+                        </div>
+                        <div className="olympics-visual-node">
+                          <span className="olympics-visual-dot" />
+                          <div>
+                            <p className="text-white font-semibold">Automation Logic</p>
+                            <p className="text-white/60 text-xs">Workflow design</p>
+                          </div>
+                        </div>
+                        <div className="olympics-visual-node">
+                          <span className="olympics-visual-dot" />
+                          <div>
+                            <p className="text-white font-semibold">Transformation</p>
+                            <p className="text-white/60 text-xs">Impact outcome</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="olympics-visual-diagram" aria-hidden="true">
+                        <span className="olympics-visual-gear" />
+                        <span className="olympics-visual-gear olympics-visual-gear-lg" />
+                        <span className="olympics-visual-node-dot" />
+                        <span className="olympics-visual-node-dot olympics-visual-node-bright" />
+                        <span className="olympics-visual-link" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </section>
   );
 };
