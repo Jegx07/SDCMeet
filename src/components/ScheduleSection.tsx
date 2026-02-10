@@ -1,94 +1,98 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { Coffee, Code, Briefcase, Users, Award, Utensils } from 'lucide-react';
+import { AnimatePresence, motion, useInView } from 'framer-motion';
+import { useRef, useState } from 'react';
+import {
+  Award,
+  Code,
+  Coffee,
+  Cpu,
+  Sparkles,
+  Target,
+  Users,
+  Utensils,
+  Zap,
+  type LucideIcon,
+} from 'lucide-react';
 
-const morningSchedule = [
+type ScheduleItem = {
+  time: string;
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  isOlympics?: boolean;
+};
+
+const schedule: ScheduleItem[] = [
   {
-    time: '08:30 - 08:45',
-    title: 'Welcome & Kick-off',
-    description: '15 mins - —',
+    time: '09:00 - 09:15',
+    title: 'Welcome & Inauguration',
+    description: 'Event opening and introduction',
     icon: Users,
   },
   {
-    time: '08:45 - 09:00',
-    title: 'Keynote Session',
-    description: '15 mins - Keynote Speaker',
+    time: '09:15 - 09:45',
+    title: 'Keynote: Future of AI & Intelligent Automation',
+    description: 'Industry insights',
     icon: Award,
   },
   {
-    time: '09:00 - 10:00',
-    title: 'Meet UiPath: Turning Manual Tasks into Smart Automation',
-    description: '60 mins - Viraj Sir',
-    icon: Code,
-  },
-  {
-    time: '10:00 - 10:30',
-    title: 'Road map to Automation',
-    description: '30 mins - Pugal',
+    time: '09:45 - 10:30',
+    title: 'Mr. Viraj',
+    description: 'Meet UiPath: Turning Manual Tasks into Smart Automation',
     icon: Code,
   },
   {
     time: '10:30 - 11:15',
-    title: 'RPA Gateway to Agentic Automation',
-    description: '45 mins - Parvathy Mam',
+    title: 'Mr. Palaniyappan',
+    description: 'Coded Agent with UiPath SDK and LangGraph',
     icon: Code,
   },
   {
     time: '11:15 - 11:45',
-    title: 'Champion Session 2',
-    description: '30 mins - Saptak',
-    icon: Award,
-  },
-  {
-    time: '11:45 - 12:15',
-    title: 'Morning Break',
-    description: '30 mins - —',
+    title: 'Tea Break',
+    description: '',
     icon: Coffee,
   },
-];
-
-const afternoonSchedule = [
   {
-    time: '12:15 - 13:15',
-    title: 'Speaker Session 3',
-    description: '60 mins - Srenivasan sir',
-    icon: Briefcase,
+    time: '11:45 - 12:30',
+    title: 'Mr. Srenivasan',
+    description: 'AI Help Desk & Smart Resume Screening Agent',
+    icon: Code,
   },
   {
-    time: '01:15 - 01:45',
-    title: 'Champion Session 3',
-    description: '30 mins - Dharshini',
-    icon: Award,
+    time: '12:30 - 01:30',
+    title: 'Ms. Teena Cobb',
+    description: 'Industry Automation Insights',
+    icon: Code,
   },
   {
-    time: '01:45 - 02:45',
+    time: '01:30 - 02:30',
     title: 'Lunch Break',
-    description: '60 mins - —',
+    description: '',
     icon: Utensils,
   },
   {
-    time: '02:45 - 03:30',
+    time: '02:30 - 03:30',
     title: 'UiPath Olympics',
-    description: '45 mins - All',
+    description: 'Automation challenges',
     icon: Users,
+    isOlympics: true,
   },
   {
-    time: '03:30 - 04:15',
-    title: 'Speaker Session 4',
-    description: '45 mins - S4',
-    icon: Briefcase,
+    time: '03:30 - 03:45',
+    title: 'Tea Break',
+    description: '',
+    icon: Coffee,
   },
   {
-    time: '04:15 - 04:35',
-    title: 'Champion Session 4',
-    description: '30 mins - Srishti',
+    time: '03:45 - 04:00',
+    title: 'Evaluation',
+    description: '',
     icon: Award,
   },
   {
-    time: '04:35 - 05:30',
-    title: 'Felicitation + Closing Remarks + Photo Session',
-    description: '60 mins - —',
+    time: '04:00 - 04:30',
+    title: 'Prize Distribution & Closing Ceremony',
+    description: '',
     icon: Award,
   },
 ];
@@ -97,12 +101,12 @@ const TimelineItem = ({
   item,
   index,
   isInView,
-  isActive = false,
+  onClick,
 }: {
-  item: (typeof morningSchedule)[0];
+  item: ScheduleItem;
   index: number;
   isInView: boolean;
-  isActive?: boolean;
+  onClick?: () => void;
 }) => {
   return (
     <motion.div
@@ -114,18 +118,39 @@ const TimelineItem = ({
       {/* Timeline node */}
       <div className="relative flex flex-col items-center">
         <div
-          className={`w-4 h-4 rounded-full transition-all duration-300 ${
-            isActive
-              ? 'bg-primary pulse-glow scale-125'
-              : 'bg-white/20 border-2 border-white/40 group-hover:bg-primary group-hover:border-primary group-hover:scale-110'
-          }`}
+          className="w-4 h-4 rounded-full transition-all duration-300 bg-white/20 border-2 border-white/40 group-hover:bg-primary group-hover:border-primary group-hover:scale-110"
         />
         {/* Connecting line */}
         <div className="w-0.5 flex-1 bg-gradient-to-b from-primary/50 to-white/10 mt-2" />
       </div>
 
       {/* Content - Frosted glass card */}
-      <div className="flex-1 frosted-card rounded-xl p-5">
+      <div
+        className={`flex-1 frosted-card rounded-xl p-5 ${
+          item.isOlympics ? 'olympics-card cursor-pointer' : ''
+        }`}
+        onClick={onClick}
+        role={item.isOlympics ? 'button' : undefined}
+        tabIndex={item.isOlympics ? 0 : -1}
+        onKeyDown={(event) => {
+          if (!item.isOlympics || !onClick) return;
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            onClick();
+          }
+        }}
+      >
+        {item.isOlympics ? (
+          <>
+            <span className="olympics-wave" aria-hidden="true" />
+            <span className="olympics-ripple" aria-hidden="true" />
+            <span className="olympics-glow" aria-hidden="true" />
+            <span className="olympics-badge">
+              <span className="olympics-badge-text">Special Event</span>
+              <Sparkles className="olympics-badge-icon" aria-hidden="true" />
+            </span>
+          </>
+        ) : null}
         <div className="flex items-start justify-between gap-4">
           <div>
             <span className="text-primary font-bold text-sm">{item.time}</span>
@@ -146,6 +171,14 @@ const TimelineItem = ({
 export const ScheduleSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const [isOlympicsOpen, setOlympicsOpen] = useState(false);
+
+  const olympicsSteps = [
+    { title: 'Draw Problem Cue Card', icon: Sparkles },
+    { title: 'Analyze Real-Life Challenge', icon: Cpu },
+    { title: 'Design Automation Workflow Idea', icon: Zap },
+    { title: 'Present Solution to Judges', icon: Target },
+  ];
 
   return (
     <section id="schedule" className="relative overflow-hidden">
@@ -179,69 +212,167 @@ export const ScheduleSection = () => {
             </p>
           </motion.div>
 
-          {/* Schedule Grid */}
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
-            {/* Morning Track */}
+          {/* Schedule */}
+          <div className="max-w-4xl mx-auto">
             <div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5 }}
-                className="flex items-center gap-3 mb-8"
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center glow-orange-sm">
-                  <Code className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-display font-bold text-2xl text-white">
-                    Morning Session
-                  </h3>
-                </div>
-              </motion.div>
-              <div>
-                {morningSchedule.map((item, index) => (
-                  <TimelineItem
-                    key={item.title}
-                    item={item}
-                    index={index}
-                    isInView={isInView}
-                    isActive={index === 2}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Afternoon Track */}
-            <div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="flex items-center gap-3 mb-8"
-              >
-                <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center">
-                  <Briefcase className="w-6 h-6 text-sdc-dark" />
-                </div>
-                <div>
-                  <h3 className="font-display font-bold text-2xl text-white">
-                    Afternoon Session
-                  </h3>
-                </div>
-              </motion.div>
-              <div>
-                {afternoonSchedule.map((item, index) => (
-                  <TimelineItem
-                    key={item.title}
-                    item={item}
-                    index={index + morningSchedule.length}
-                    isInView={isInView}
-                  />
-                ))}
-              </div>
+              {schedule.map((item, index) => (
+                <TimelineItem
+                  key={item.title}
+                  item={item}
+                  index={index}
+                  isInView={isInView}
+                  onClick={item.isOlympics ? () => setOlympicsOpen(true) : undefined}
+                />
+              ))}
             </div>
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {isOlympicsOpen ? (
+          <motion.div
+            className="olympics-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.button
+              type="button"
+              className="olympics-overlay-backdrop"
+              onClick={() => setOlympicsOpen(false)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              aria-label="Close UiPath Olympics experience"
+            />
+            <motion.div
+              className="olympics-modal"
+              initial={{ opacity: 0, y: 20, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.98 }}
+              transition={{ duration: 0.35 }}
+              role="dialog"
+              aria-modal="true"
+            >
+              <div className="olympics-modal-glow" aria-hidden="true" />
+              <div className="olympics-modal-grid" aria-hidden="true" />
+
+              <div className="olympics-modal-content">
+                <div className="olympics-modal-header">
+                  <div>
+                    <p className="text-primary font-semibold text-xs uppercase tracking-[0.3em]">
+                      UiPath Olympics
+                    </p>
+                    <h3 className="font-display font-black text-3xl md:text-5xl text-white mt-3">
+                      UiPath Olympics - Innovation Challenge
+                    </h3>
+                    <p className="text-white/70 text-lg mt-3">
+                      Think. Automate. Innovate.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    className="olympics-close"
+                    onClick={() => setOlympicsOpen(false)}
+                  >
+                    Back to Schedule
+                  </button>
+                </div>
+
+                <div className="mt-8 text-white/70 leading-relaxed space-y-4">
+                  <p>
+                    UiPath Olympics is an engaging innovation challenge designed to promote
+                    creativity, teamwork, and real-world automation problem solving.
+                  </p>
+                  <p>
+                    In this event, each team leader will draw a cue card containing a real-life
+                    problem scenario. Teams will be given one hour to analyze the challenge and
+                    propose a technical or automation-based workflow solution using logical
+                    thinking and UiPath concepts.
+                  </p>
+                  <p>
+                    Participants are not required to fully develop a project. Instead, they must
+                    focus on understanding the problem, designing an efficient automation
+                    workflow idea, and presenting their solution strategy and expected outcome
+                    to judges.
+                  </p>
+                  <p>
+                    The activity encourages students to think like automation developers and
+                    explore how automation can simplify everyday tasks through collaboration
+                    and innovation.
+                  </p>
+                </div>
+
+                <div className="mt-10 grid gap-6 lg:grid-cols-2">
+                  <div className="frosted-card rounded-2xl p-6 olympics-panel">
+                    <h4 className="text-white font-display text-xl font-bold mb-6">
+                      How The Challenge Works
+                    </h4>
+                    <div className="space-y-4">
+                      {olympicsSteps.map((step, index) => (
+                        <motion.div
+                          key={step.title}
+                          className="olympics-step"
+                          initial={{ opacity: 0, x: -16 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.1 + index * 0.08 }}
+                        >
+                          <span className="olympics-step-icon">
+                            <step.icon className="w-5 h-5 text-primary" />
+                          </span>
+                          <span className="text-white/80 text-sm md:text-base">
+                            {step.title}
+                          </span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="frosted-card rounded-2xl p-6 olympics-panel">
+                    <h4 className="text-white font-display text-xl font-bold mb-6">
+                      Automation Innovation Story
+                    </h4>
+                    <div className="olympics-visual">
+                      <div className="olympics-visual-flow">
+                        <span className="olympics-visual-line" />
+                        <div className="olympics-visual-node">
+                          <span className="olympics-visual-dot" />
+                          <div>
+                            <p className="text-white font-semibold">Problem Signal</p>
+                            <p className="text-white/60 text-xs">Input discovery</p>
+                          </div>
+                        </div>
+                        <div className="olympics-visual-node">
+                          <span className="olympics-visual-dot" />
+                          <div>
+                            <p className="text-white font-semibold">Automation Logic</p>
+                            <p className="text-white/60 text-xs">Workflow design</p>
+                          </div>
+                        </div>
+                        <div className="olympics-visual-node">
+                          <span className="olympics-visual-dot" />
+                          <div>
+                            <p className="text-white font-semibold">Transformation</p>
+                            <p className="text-white/60 text-xs">Impact outcome</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="olympics-visual-diagram" aria-hidden="true">
+                        <span className="olympics-visual-gear" />
+                        <span className="olympics-visual-gear olympics-visual-gear-lg" />
+                        <span className="olympics-visual-node-dot" />
+                        <span className="olympics-visual-node-dot olympics-visual-node-bright" />
+                        <span className="olympics-visual-link" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </section>
   );
 };
