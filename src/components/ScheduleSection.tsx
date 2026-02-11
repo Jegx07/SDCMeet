@@ -31,7 +31,7 @@ const schedule: ScheduleItem[] = [
   },
   {
     time: '09:45 - 10:30',
-    title: 'Mr. Viraj',
+    title: 'Mr. Veeraraj',
     description: 'Meet UiPath: Turning Manual Tasks into Smart Automation',
     icon: Code,
   },
@@ -49,7 +49,7 @@ const schedule: ScheduleItem[] = [
   },
   {
     time: '11:45 - 12:30',
-    title: 'Mr. Srenivasan',
+    title: 'Mr. Srenivasan Kannan',
     description: 'AI Help Desk & Smart Resume Screening Agent',
     icon: Code,
   },
