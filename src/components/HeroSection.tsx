@@ -7,7 +7,7 @@ export const HeroSection = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center overflow-hidden dark-section"
+      className="relative min-h-screen flex items-start overflow-hidden dark-section"
     >
       {/* Subtle Glow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -16,21 +16,9 @@ export const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 pt-28 pb-20">
+      <div className="relative z-10 container mx-auto px-6 pt-12 pb-0">
         <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="max-w-xl text-center lg:text-left">
-
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-5"
-          >
-            <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm font-medium">
-              UiPath Student Developers Meet
-            </span>
-          </motion.div>
 
           {/* Heading */}
           <motion.h1
@@ -39,6 +27,7 @@ export const HeroSection = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="font-display font-black text-4xl md:text-6xl lg:text-7xl mb-6 leading-tight"
           >
+            <span className="gradient-text-orange">UiPath </span>
             <span className="text-white">Student Developers </span>
             <span className="gradient-text-orange">Meet</span>
           </motion.h1>
