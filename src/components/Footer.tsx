@@ -24,9 +24,9 @@ export const Footer = () => {
           {/* Social Links */}
           <div className="flex items-center gap-3">
             {[
-              { icon: Linkedin, href: '#' },
-              { icon: Instagram, href: '#' },
-              { icon: Youtube, href: '#' },
+              { icon: Linkedin, href: 'https://www.linkedin.com/in/uizera-rpa-club-psnacet-6a8b67355' },
+              { icon: Instagram, href: 'https://www.instagram.com/psna_uizeraclub?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
+              { icon: Youtube, href: 'www.youtube.com/@uizeraCSBS' },
             ].map((social, index) => (
               <a
                 key={index}
