@@ -77,7 +77,7 @@ export const LocationSection = () => {
                     Dindigul, Tamil Nadu 624622, India
                   </p>
                   <a
-                    href="https://www.google.com/maps/dir/?api=1&destination=10.416397389711337,77.89805427508364"
+                    href="https://maps.app.goo.gl/AyMM1WfwBtgBS1n67"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-primary hover:underline font-semibold"
