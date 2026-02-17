@@ -1,31 +1,20 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Play, Lock, BookOpen, FileText, SkipForward, Home } from "lucide-react";
+import { Check, Play, Lock, FileText, SkipForward, Home } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const steps = [
   { id: 0, title: "Tutorial Video", icon: Play },
-  { id: 1, title: "Automation Starter Course", icon: BookOpen },
-  { id: 2, title: "Complete Registration Form", icon: FileText },
+  { id: 1, title: "Complete Registration Form", icon: FileText },
 ];
 
 export default function RegisterPage() {
   const [currentStep, setCurrentStep] = useState(0);
   const [videoCompleted, setVideoCompleted] = useState(false);
-  const [courseCompleted, setCourseCompleted] = useState(false);
 
   const handleSkipVideo = () => {
     setVideoCompleted(true);
     setCurrentStep(1);
-  };
-
-  const handleOpenCourse = () => {
-    window.open(
-      "https://academy.uipath.com/learning-plans/rpa-starter",
-      "_blank"
-    );
-    setCourseCompleted(true);
-    setCurrentStep(2);
   };
 
   const registrationFormUrl = "https://forms.gle/SLoSoXYse49Xhqdv5";
@@ -63,9 +52,7 @@ export default function RegisterPage() {
               {steps.map((step, index) => {
                 const isActive = currentStep === index;
                 const isCompleted = currentStep > index;
-                const isLocked =
-                  (index === 1 && !videoCompleted) ||
-                  (index === 2 && !courseCompleted);
+                const isLocked = index === 1 && !videoCompleted;
 
                 return (
                   <div key={step.id} className="relative flex items-start gap-4 mb-12">
@@ -147,33 +134,6 @@ export default function RegisterPage() {
 
                 {/* STEP 2 */}
                 {currentStep === 1 && (
-                  <motion.div
-                    key="step2"
-                    initial={{ opacity: 0, x: 40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -40 }}
-                    transition={{ duration: 0.4 }}
-                    className="bg-white/5 border border-white/10 rounded-2xl p-10"
-                  >
-                    <h2 className="text-2xl font-bold mb-6">
-                      Automation Starter Course
-                    </h2>
-
-                    <p className="text-white/60 mb-8">
-                      Open the official UiPath starter learning path.
-                    </p>
-
-                    <button
-                      onClick={handleOpenCourse}
-                      className="px-8 py-4 bg-orange-500 hover:bg-orange-600 rounded-xl font-bold transition transform hover:scale-105"
-                    >
-                      Open Course
-                    </button>
-                  </motion.div>
-                )}
-
-                {/* STEP 3 */}
-                {currentStep === 2 && (
                   <motion.div
                     key="step3"
                     initial={{ opacity: 0, x: 40 }}
